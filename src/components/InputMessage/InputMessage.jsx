@@ -1,8 +1,8 @@
 import './InputMessage.scss';
 
-export const InputMessage = ({ submit }) => {
+export const InputMessage = ({ change }) => {
   function handleChange(event) {
-    submit(event.target.value);
+    change(event.target.value);
   }
 
   return (
