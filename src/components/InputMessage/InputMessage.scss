@@ -2,21 +2,41 @@
   &__label {
     display: block;
     color: rgb(162, 112, 241);
-    margin-bottom: 15px;
+  }
+
+  &__actions {
+    display: flex;
   }
 
   &__input {
+    width: 100%;
     background-color: inherit;
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
     border: none;
     outline: none;
-    padding: 5px 10px;
-    border-bottom: 2px solid #fff;
+    padding: 10px;
+    border-bottom: 1px solid rgb(162, 112, 241);
     transition: all 0.5s;
 
     &:focus {
-      border-bottom: 2px solid rgb(162, 112, 241);
+      border-bottom: 1px solid rgb(162, 112, 241);
+    }
+  }
+
+  &__btn {
+    margin-left: 20px;
+    cursor: pointer;
+    padding: 10px;
+    background: transparent;
+    color: rgb(162, 112, 241);
+    font-size: 18px;
+    border: 1px solid rgb(162, 112, 241);
+    transition: 0.5s all;
+
+    &:hover {
+      background: rgb(162, 112, 241);
+      color: white;
     }
   }
 }

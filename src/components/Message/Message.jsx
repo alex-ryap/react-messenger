@@ -1,11 +1,14 @@
 import './Message.scss';
 
 export const Message = ({ message }) => {
+  const classes = message.author === 'Me' ? 'message' : 'message message__left';
+
   return (
-    <div>
-      <h1 className="message">
-        <span className="message__label">Message:</span> {message}
-      </h1>
-    </div>
+    <span className={classes}>
+      <span className="message__text">{message.text}</span>
+      <span className="message__info">
+        {message.author}, {message.date}
+      </span>
+    </span>
   );
 };
