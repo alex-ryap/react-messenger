@@ -1,19 +1,26 @@
 import { useState } from 'react';
+import { AUTHORS, DATEOPTIONS } from '../../utils/constants';
 import './InputMessage.scss';
 
 export const InputMessage = ({ submit }) => {
-  const [message, setMessage] = useState('');
+  const [text, setText] = useState('');
 
   const handlerSubmit = (event) => {
     event.preventDefault();
-    if (message) {
+    if (text) {
+      const message = {
+        author: AUTHORS.me,
+        text: text,
+        date: new Intl.DateTimeFormat('ru-RU', DATEOPTIONS).format(new Date()),
+      };
+
       submit(message);
-      setMessage('');
+      setText('');
     }
   };
 
   const handlerChange = (event) => {
-    setMessage(event.target.value);
+    setText(event.target.value);
   };
 
   return (
@@ -24,7 +31,7 @@ export const InputMessage = ({ submit }) => {
           className="form__input"
           type="text"
           onChange={handlerChange}
-          value={message}
+          value={text}
         />
         <button className="form__btn" type="submit">
           Send

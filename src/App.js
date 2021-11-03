@@ -1,36 +1,36 @@
 import { Message } from './components/Message/Message';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { InputMessage } from './components/InputMessage/InputMessage';
+import { AUTHORS, DATEOPTIONS } from './utils/constants';
+import { v4 as uuid } from 'uuid';
 import './App.scss';
 
 function App() {
-  const [messageId, setMessageId] = useState(1);
   const [messageList, setMessageList] = useState([]);
 
-  // Need use callback with prevState
-  const addNewMessage = (text, author = 'Me') => {
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-    const message = {
-      id: messageId,
-      author: author,
-      text: text,
-      date: new Intl.DateTimeFormat('ru-RU', options).format(new Date()),
-    };
+  const addNewMessage = useCallback((message) => {
+    message.id = uuid();
+    setMessageList((prevMessageList) => [...prevMessageList, message]);
+  }, []);
 
-    setMessageList([...messageList, message]);
-    setMessageId(messageId + 1);
-  };
-
-  // Line 34:6:  React Hook useEffect has a missing dependency: 'addNewMessage'. Either include it or remove the dependency array
   useEffect(() => {
-    if (messageList.length >= 1) {
-      if (messageList[messageList.length - 1].author === 'Me') {
-        setTimeout(() => addNewMessage('Hello, i am Robot', 'Robot'), 2000);
-      }
+    if (
+      messageList.length &&
+      messageList[messageList.length - 1].author === 'Me'
+    ) {
+      const timeout = setTimeout(
+        () =>
+          addNewMessage({
+            author: AUTHORS.robot,
+            text: 'Hello, i am Robot',
+            date: new Intl.DateTimeFormat('ru-RU', DATEOPTIONS).format(
+              new Date()
+            ),
+          }),
+        2000
+      );
+
+      return () => clearTimeout(timeout);
     }
   }, [messageList]);
 
