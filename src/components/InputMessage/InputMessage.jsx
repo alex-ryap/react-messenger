@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { TextField, Button, Grid } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 import { AUTHORS, DATEOPTIONS } from '../../utils/constants';
+
 import './InputMessage.scss';
 
 export const InputMessage = ({ submit }) => {
   const [text, setText] = useState('');
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handlerSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +24,7 @@ export const InputMessage = ({ submit }) => {
 
       submit(message);
       setText('');
+      inputRef.current?.focus();
     }
   };
 
@@ -25,18 +34,32 @@ export const InputMessage = ({ submit }) => {
 
   return (
     <form className="form" onSubmit={handlerSubmit}>
-      <label className="form__label">Type your message here:</label>
-      <div className="form__actions">
-        <input
-          className="form__input"
-          type="text"
-          onChange={handlerChange}
-          value={text}
-        />
-        <button className="form__btn" type="submit">
-          Send
-        </button>
-      </div>
+      <Grid
+        container
+        spacing={2}
+        sx={{ px: 2 }}
+        direction="row"
+        justifyContent="space-around"
+        alignItems="center"
+      >
+        <Grid item xs>
+          <TextField
+            label="Type your message here"
+            fullWidth
+            id="filled-hidden-label-small"
+            size="small"
+            variant="filled"
+            value={text}
+            inputRef={inputRef}
+            onChange={handlerChange}
+          />
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" endIcon={<SendIcon />} type="submit">
+            Send
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 };
