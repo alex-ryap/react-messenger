@@ -1,4 +1,4 @@
-import { Divider, List, ListItemText, Toolbar } from '@mui/material';
+import { Divider, List, Toolbar } from '@mui/material';
 import { Message } from '../Message/Message';
 
 export default function MessagesHistory({ messageList }) {

@@ -7,6 +7,10 @@ import './Messanger.scss';
 import { Grid } from '@mui/material';
 import Sidebar from '../Sidebar/Sidebar';
 import MessagesHistory from '../MessagesHistory/MessagesHistory';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useMemo } from 'react';
+import { purple } from '@mui/material/colors';
 
 const listOfChats = [
   {
@@ -50,6 +54,22 @@ export default function Messenger() {
   const [chats, setChats] = useState(listOfChats);
   const [messageList, setMessageList] = useState([]);
 
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: purple[400],
+          },
+        },
+        typography: {
+          fontSize: 14,
+        },
+      }),
+    []
+  );
+
   const addNewMessage = useCallback((message) => {
     message.id = uuid();
     setMessageList((prevMessageList) => [...prevMessageList, message]);
@@ -77,14 +97,17 @@ export default function Messenger() {
   }, [messageList]);
 
   return (
-    <Grid container sx={{ px: 2 }}>
-      <Grid item md={3}>
-        <Sidebar chats={chats} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Grid container sx={{ px: 2 }}>
+        <Grid item md={3}>
+          <Sidebar chats={chats} />
+        </Grid>
+        <Grid item md={9}>
+          <MessagesHistory messageList={messageList} />
+          <InputMessage submit={addNewMessage} />
+        </Grid>
       </Grid>
-      <Grid item md={9}>
-        <MessagesHistory messageList={messageList} />
-        <InputMessage submit={addNewMessage} />
-      </Grid>
-    </Grid>
+    </ThemeProvider>
   );
 }
