@@ -1,40 +1,46 @@
 import { useState } from 'react';
 import { AUTHORS, DATEOPTIONS } from '../../utils/constants';
-import './InputMessage.scss';
+import userPhoto from '../../img/User Photo.png';
+import { v4 as uuid } from 'uuid';
+import './style.scss';
 
-export const InputMessage = ({ submit }) => {
+export const InputMessage = ({ chatId, sendMessage }) => {
   const [text, setText] = useState('');
 
-  const handlerSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (text) {
       const message = {
-        author: AUTHORS.me,
+        id: uuid(),
+        author: {
+          avatar: userPhoto,
+          name: AUTHORS.me,
+        },
         text: text,
         date: new Intl.DateTimeFormat('ru-RU', DATEOPTIONS).format(new Date()),
       };
 
-      submit(message);
+      sendMessage(message, chatId);
       setText('');
     }
   };
 
-  const handlerChange = (event) => {
+  const handleChange = (event) => {
     setText(event.target.value);
   };
 
   return (
-    <form className="form" onSubmit={handlerSubmit}>
-      <label className="form__label">Type your message here:</label>
+    <form className="form" onSubmit={handleSubmit}>
       <div className="form__actions">
         <input
           className="form__input"
           type="text"
-          onChange={handlerChange}
+          placeholder="Type a message here"
+          onChange={handleChange}
           value={text}
         />
         <button className="form__btn" type="submit">
-          Send
+          <i className="fas fa-location-arrow"></i>
         </button>
       </div>
     </form>

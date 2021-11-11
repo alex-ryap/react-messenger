@@ -1,0 +1,37 @@
+.form {
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  &__input {
+    width: 100%;
+    background-color: inherit;
+    color: #000;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 10px;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    background: linear-gradient(325.78deg, #2a8bf2 14.76%, #7cb8f7 87.3%);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    transition: 0.5s all;
+
+    &:hover {
+      box-shadow: 4px 4px 25px rgba(42, 139, 242, 0.15),
+        2px 2px 25px rgba(42, 139, 242, 0.05),
+        4px 6px 10px rgba(42, 139, 242, 0.15);
+    }
+  }
+}

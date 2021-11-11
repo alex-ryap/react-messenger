@@ -1,60 +1,161 @@
-import { Message } from './components/Message/Message';
-import { useState, useEffect, useCallback } from 'react';
-import { InputMessage } from './components/InputMessage/InputMessage';
-import { AUTHORS, DATEOPTIONS } from './utils/constants';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Home } from './routes/Home';
+import { Chats } from './routes/Chats';
+import human1 from './img/human1.png';
+import human2 from './img/human2.png';
+import human3 from './img/human3.png';
 import { v4 as uuid } from 'uuid';
 import './App.scss';
+import { useCallback, useState } from 'react';
+
+const chatsList = [
+  {
+    id: 1,
+    user: {
+      avatar: human1,
+      name: 'Lilly Robin',
+    },
+    messages: [
+      {
+        id: uuid(),
+        author: {
+          avatar: human1,
+          name: 'Lilly Robin',
+        },
+        text: 'Hi, Henry',
+        date: '2 minutes ago',
+      },
+      {
+        id: uuid(),
+        author: {
+          avatar: human1,
+          name: 'Lilly Robin',
+        },
+        text: 'How are you?',
+        date: '2 minutes ago',
+      },
+    ],
+    lastMessage: {
+      id: uuid(),
+      author: {
+        avatar: human1,
+        name: 'Lilly Robin',
+      },
+      text: 'How are you?',
+      date: '2 minutes ago',
+    },
+    newMessagesCount: 1,
+  },
+  {
+    id: 2,
+    user: {
+      avatar: human2,
+      name: 'Bob Williams',
+    },
+    messages: [
+      {
+        id: uuid(),
+        author: {
+          avatar: human2,
+          name: 'Bob Williams',
+        },
+        text: 'Where are you?',
+        date: '12 minute ago',
+      },
+    ],
+    lastMessage: {
+      id: uuid(),
+      author: {
+        avatar: human2,
+        name: 'Bob Williams',
+      },
+      text: 'Where are you?',
+      date: '12 minute ago',
+    },
+    newMessagesCount: 0,
+  },
+  {
+    id: 3,
+    user: {
+      avatar: human3,
+      name: 'Mary Grace',
+    },
+    messages: [
+      {
+        id: uuid(),
+        author: {
+          avatar: human3,
+          name: 'Mary Grace',
+        },
+        text: `Most of its text is made up from sections 1.10.32–3 of Cicero's De finibus bonorum et malorum (On the Boundaries of Goods and Evils; finibus may also be translated as purposes).`,
+        date: '25 minute ago',
+      },
+    ],
+    lastMessage: {
+      id: uuid(),
+      author: {
+        avatar: human3,
+        name: 'Mary Grace',
+      },
+      text: `Most of its text is made up from sections 1.10.32–3 of Cicero's De finibus bonorum et malorum (On the Boundaries of Goods and Evils; finibus may also be translated as purposes).`,
+      date: '25 minute ago',
+    },
+    newMessagesCount: 0,
+  },
+  {
+    id: 4,
+    user: {
+      avatar: human1,
+      name: 'Ron Ashley',
+    },
+    messages: [
+      {
+        id: uuid(),
+        author: {
+          avatar: human3,
+          name: 'Ron Ashley',
+        },
+        text: 'Go to lunch',
+        date: '1 hour ago',
+      },
+    ],
+    lastMessage: {
+      id: uuid(),
+      author: {
+        avatar: human3,
+        name: 'Ron Ashley',
+      },
+      text: 'Go to lunch',
+      date: '1 hour ago',
+    },
+    newMessagesCount: 0,
+  },
+];
 
 function App() {
-  const [messageList, setMessageList] = useState([]);
+  const [chats, setChats] = useState(chatsList);
 
-  const addNewMessage = useCallback((message) => {
-    message.id = uuid();
-    setMessageList((prevMessageList) => [...prevMessageList, message]);
-  }, []);
-
-  useEffect(() => {
-    if (
-      messageList.length &&
-      messageList[messageList.length - 1].author === 'Me'
-    ) {
-      const timeout = setTimeout(
-        () =>
-          addNewMessage({
-            author: AUTHORS.robot,
-            text: 'Hello, i am Robot',
-            date: new Intl.DateTimeFormat('ru-RU', DATEOPTIONS).format(
-              new Date()
-            ),
-          }),
-        2000
-      );
-
-      return () => clearTimeout(timeout);
-    }
-  }, [messageList]);
+  const addNewMessage = useCallback((message, id) => {
+    console.log(id, message);
+  });
 
   return (
     <div className="App">
-      <div className="container-fluid">
-        <div className="chat">
-          <div className="chat__header">
-            <h3>
-              Chat with <span>Robot</span>
-            </h3>
-          </div>
-          <div className="chat__history">
-            <div className="messages">
-              {messageList.map((message) => {
-                return <Message message={message} key={message.id} />;
-              })}
-            </div>
-          </div>
-          <div className="chat__form">
-            <InputMessage submit={addNewMessage} />
-          </div>
-        </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="chats">
+            <Route
+              index
+              element={<Chats chatsList={chats} sendMessage={addNewMessage} />}
+            />
+            <Route
+              path=":chatId"
+              element={<Chats chatsList={chats} sendMessage={addNewMessage} />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
