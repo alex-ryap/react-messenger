@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AUTHORS, DATEOPTIONS } from '../../utils/constants';
+import { AUTHORS } from '../../utils/constants';
 import userPhoto from '../../img/User Photo.png';
 import { v4 as uuid } from 'uuid';
 import './style.scss';
@@ -17,7 +17,7 @@ export const InputMessage = ({ chatId, sendMessage }) => {
           name: AUTHORS.me,
         },
         text: text,
-        date: new Intl.DateTimeFormat('ru-RU', DATEOPTIONS).format(new Date()),
+        date: 'now',
       };
 
       sendMessage(message, chatId);

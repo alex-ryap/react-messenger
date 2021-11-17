@@ -1,0 +1,40 @@
+.options {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+
+  &__content {
+    position: relative;
+  }
+
+  &__layout {
+    position: absolute;
+    background: #fff;
+    border-radius: 6px;
+    width: 100px;
+    box-shadow: 10px 10px 25px rgba(112, 124, 151, 0.05),
+      15px 15px 35px rgba(112, 124, 151, 0.05);
+  }
+
+  &__list {
+    list-style-type: none;
+    padding: 10px 0;
+  }
+
+  &__item {
+    cursor: pointer;
+    padding: 5px 20px;
+    font-weight: 500;
+
+    &-red {
+      color: #ff3366;
+    }
+
+    &:hover {
+      background: #707c9733;
+    }
+  }
+}

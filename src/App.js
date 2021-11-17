@@ -7,10 +7,11 @@ import human3 from './img/human3.png';
 import { v4 as uuid } from 'uuid';
 import './App.scss';
 import { useCallback, useState } from 'react';
+import { Profile } from './routes/Profile';
+import { Sidebar } from './components/Sidebar';
 
-const chatsList = [
-  {
-    id: 1,
+const chatsList = {
+  [uuid()]: {
     user: {
       avatar: human1,
       name: 'Lilly Robin',
@@ -46,8 +47,7 @@ const chatsList = [
     },
     newMessagesCount: 1,
   },
-  {
-    id: 2,
+  [uuid()]: {
     user: {
       avatar: human2,
       name: 'Bob Williams',
@@ -74,8 +74,7 @@ const chatsList = [
     },
     newMessagesCount: 0,
   },
-  {
-    id: 3,
+  [uuid()]: {
     user: {
       avatar: human3,
       name: 'Mary Grace',
@@ -102,8 +101,7 @@ const chatsList = [
     },
     newMessagesCount: 0,
   },
-  {
-    id: 4,
+  [uuid()]: {
     user: {
       avatar: human1,
       name: 'Ron Ashley',
@@ -130,30 +128,77 @@ const chatsList = [
     },
     newMessagesCount: 0,
   },
-];
+};
 
 function App() {
   const [chats, setChats] = useState(chatsList);
 
   const addNewMessage = useCallback((message, id) => {
-    console.log(id, message);
-  });
+    setChats((prevState) => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        messages: [...prevState[id].messages, message],
+        lastMessage: message,
+        newMessagesCount: 0,
+      },
+    }));
+  }, []);
+
+  const addNewChat = useCallback((name) => {
+    const newChat = {
+      user: {
+        avatar: human1,
+        name: name,
+      },
+      messages: [],
+      lastMessage: {
+        text: 'No messages',
+        date: 'Now',
+      },
+      newMessagesCount: 0,
+    };
+
+    setChats((prevState) => ({
+      ...prevState,
+      [uuid()]: newChat,
+    }));
+  }, []);
+
+  const deleteChat = useCallback(
+    (id) => {
+      const newChatList = { ...chats };
+      delete newChatList[id];
+      setChats(newChatList);
+    },
+    [chats]
+  );
 
   return (
     <div className="App">
       <BrowserRouter>
+        <Sidebar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="chats">
             <Route
               index
-              element={<Chats chatsList={chats} sendMessage={addNewMessage} />}
+              element={<Chats chatsList={chats} addChat={addNewChat} />}
             />
             <Route
               path=":chatId"
-              element={<Chats chatsList={chats} sendMessage={addNewMessage} />}
+              element={
+                <Chats
+                  chatsList={chats}
+                  addChat={addNewChat}
+                  sendMessage={addNewMessage}
+                  deleteChat={deleteChat}
+                />
+              }
             />
           </Route>
+          <Route path="profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

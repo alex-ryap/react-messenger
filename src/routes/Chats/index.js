@@ -1,19 +1,20 @@
 import { useParams } from 'react-router';
 import { ChatComponent } from '../../components/Chat';
 import { ChatsComponent } from '../../components/Chats';
-import { Sidebar } from '../../components/Sidebar';
 import './style.scss';
 
-export const Chats = ({ chatsList, sendMessage }) => {
+export const Chats = ({ chatsList, sendMessage, addChat, deleteChat }) => {
   const { chatId } = useParams();
   return (
     <div className="chats__page">
-      <Sidebar />
-      <ChatsComponent chatsList={chatsList} />
-      {chatId ? (
-        <ChatComponent chat={chatsList[chatId - 1]} sendMessage={sendMessage} />
-      ) : (
-        ''
+      <ChatsComponent chatsList={chatsList} addChat={addChat} />
+      {chatId && Object.keys(chatsList).includes(chatId) && (
+        <ChatComponent
+          chat={chatsList[chatId]}
+          id={chatId}
+          sendMessage={sendMessage}
+          deleteChat={deleteChat}
+        />
       )}
     </div>
   );

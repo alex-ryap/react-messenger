@@ -1,12 +1,14 @@
 import './style.scss';
 
-export const Message = ({ message, user }) => {
-  const classes = message.author === 'Me' ? 'message' : 'message message__left';
+export const Message = ({ message, author }) => {
+  const classes = author.name === 'Me' ? 'message message__right' : 'message';
 
   return (
     <li>
       <div className={classes}>
-        <img src={user.avatar} alt="user" />
+        {author.name !== 'Me' && (
+          <img className="message__avatar" src={author.avatar} alt="user" />
+        )}
         <div className="message__content">
           <div className="message__text">{message.text}</div>
           <span className="message__date">{message.date}</span>
