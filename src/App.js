@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './routes/Home';
 import { Chats } from './routes/Chats';
@@ -5,6 +6,9 @@ import human1 from './img/human1.png';
 import human2 from './img/human2.png';
 import human3 from './img/human3.png';
 import { v4 as uuid } from 'uuid';
+=======
+import Messenger from './components/Messenger/Messenger';
+>>>>>>> 2dd0bf9af4eeebeac5e31adc557ea7d9d0da5d2c
 import './App.scss';
 import { useCallback, useState } from 'react';
 import { Profile } from './routes/Profile';
@@ -131,6 +135,7 @@ const chatsList = {
 };
 
 function App() {
+<<<<<<< HEAD
   const [chats, setChats] = useState(chatsList);
 
   const addNewMessage = useCallback((message, id) => {
@@ -201,6 +206,11 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
+=======
+  return (
+    <div className="App">
+      <Messenger />
+>>>>>>> 2dd0bf9af4eeebeac5e31adc557ea7d9d0da5d2c
     </div>
   );
 }
