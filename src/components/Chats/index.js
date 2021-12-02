@@ -1,9 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useState } from 'react/cjs/react.development';
+import { addChat } from '../../store/Chats/actions';
+import { selectAllChats } from '../../store/Chats/selectors';
 import { ChatItem } from '../ChatItem';
 import { CreateChatDialog } from '../CreateChatDialog';
 import './style.scss';
 
-export const ChatsComponent = ({ chatsList, addChat }) => {
+export const ChatsComponent = () => {
+  const chatsList = useSelector(selectAllChats);
+  const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
 
   const openDialog = useCallback(() => {
@@ -14,11 +19,20 @@ export const ChatsComponent = ({ chatsList, addChat }) => {
     setShowDialog(false);
   }, []);
 
+  const createChat = (userId) => {
+    const newChat = {
+      id: chatsList.length + 1,
+      user: userId,
+    };
+
+    dispatch(addChat(newChat));
+  };
+
   return (
     <div className="chats">
       {showDialog && (
         <CreateChatDialog
-          save={addChat}
+          save={createChat}
           close={closeDialog}
           title="Create new chat"
         ></CreateChatDialog>
@@ -39,10 +53,8 @@ export const ChatsComponent = ({ chatsList, addChat }) => {
           <i className="fas fa-search search-icon"></i>
         </div>
         <ul className="chats__list">
-          {Object.keys(chatsList).map((chatId) => {
-            return (
-              <ChatItem chat={chatsList[chatId]} id={chatId} key={chatId} />
-            );
+          {chatsList.map((chat) => {
+            return <ChatItem id={chat.id} key={chat.id} />;
           })}
         </ul>
       </div>

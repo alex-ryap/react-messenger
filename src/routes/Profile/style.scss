@@ -1,15 +1,58 @@
 .profile {
   display: flex;
+  position: relative;
+  width: 100%;
 
   &__content {
     width: 100%;
     margin: 40px;
   }
 
+  &__settings {
+    margin-top: 30px;
+  }
+
+  &__btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    padding: 18px 25px;
+    background: linear-gradient(92.68deg, #7cb8f7 0%, #2a8bf2 100%);
+    border-radius: 6px;
+    text-transform: uppercase;
+    transition: 0.4s all;
+
+    &:hover {
+      box-shadow: 6px 6px 25px rgba(42, 139, 242, 0.15),
+        4px 4px 25px rgba(42, 139, 242, 0.05),
+        10px 6px 25px rgba(42, 139, 242, 0.15);
+    }
+  }
+}
+
+.settings {
+  &__field {
+    margin-top: 20px;
+  }
+
+  &__title {
+    font-size: 20px;
+  }
+
+  &__edit {
+    margin: 15px 0 0 20px;
+    font-size: 18px;
+    padding: 3px 5px;
+  }
+
   &__theme {
     display: flex;
     align-items: center;
-    margin-top: 50px;
     font-size: 18px;
   }
 

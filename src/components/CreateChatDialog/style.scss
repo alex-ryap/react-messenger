@@ -19,7 +19,7 @@
   background: #fff;
 
   &__content {
-    margin: 30px 0;
+    margin: 30px 0 15px 0;
   }
 
   &__actions {
@@ -41,6 +41,10 @@
       outline: none;
       border: 2px solid #7cb8f7;
     }
+  }
+
+  &__error {
+    margin-top: 10px;
   }
 
   &__btn {
