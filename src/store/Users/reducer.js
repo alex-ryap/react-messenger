@@ -1,9 +1,15 @@
 import human1 from '../../img/human1.png';
 import human2 from '../../img/human2.png';
 import human3 from '../../img/human3.png';
-import { ADD_USER, DELETE_USER } from './actions';
+import bot from '../../img/robot.png';
+import { ADD_USER, CHANGE_USER, DELETE_USER } from './actions';
 
 const initialState = [
+  {
+    userId: -1,
+    avatar: bot,
+    name: 'Bot',
+  },
   {
     userId: 1,
     avatar: human1,
@@ -35,8 +41,10 @@ export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
       return [...state, action.payload];
+    case CHANGE_USER:
+      return [...state];
     case DELETE_USER:
-      return [...state.filter((user) => user.userId === action.payload)];
+      return [...state.filter((user) => user.userId !== action.payload)];
     default:
       return state;
   }

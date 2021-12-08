@@ -1,6 +1,6 @@
 import { ADD_MESSAGE } from './actions';
 import { v4 as uuid } from 'uuid';
-import { ADD_CHAT } from '../Chats/actions';
+import { ADD_CHAT, DELETE_CHAT } from '../Chats/actions';
 
 const initialState = {
   1: [
@@ -63,6 +63,11 @@ export const messagesReducer = (state = initialState, action) => {
         ...state,
         [action.payload.id]: [],
       };
+    case DELETE_CHAT: {
+      const newState = state;
+      delete newState[action.payload.id];
+      return newState;
+    }
     default:
       return state;
   }

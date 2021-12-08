@@ -10,7 +10,7 @@ export const Chats = () => {
   const { chatId } = useParams();
 
   return (
-    <div className="chats__page">
+    <div className="chat__page">
       <ChatsComponent />
       {chatId && chatsId.includes(+chatId) && <ChatComponent id={+chatId} />}
     </div>

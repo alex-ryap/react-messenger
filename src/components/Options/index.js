@@ -1,6 +1,6 @@
 import './style.scss';
 
-export const ChatOptions = ({ position, close, onDelete }) => {
+export const Options = ({ position, close, onDelete }) => {
   return (
     <div className="options" onClick={close}>
       <div className="options__content">

@@ -12,7 +12,10 @@ import { selectUser } from '../../store/Chats/selectors';
 export const ChatItem = ({ id }) => {
   const user = useSelector(selectUser(id));
   const messages = useSelector(selectAllMessages(id));
-  const lastMessage = useSelector(selectLastMessage(id));
+  const lastMessage = useSelector(selectLastMessage(id)) || {
+    date: 'now',
+    text: 'No messages',
+  };
 
   const newMessagesCount = messages.reduce(
     (sum, message) => (message.isRead ? sum + 0 : sum + 1),

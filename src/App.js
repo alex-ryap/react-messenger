@@ -1,17 +1,18 @@
 import { Provider } from 'react-redux';
 import { RoutesApp } from './routes';
-import { store } from './store';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { persistor, store } from './store';
 
 import './App.scss';
 
-function App() {
+export const App = () => {
   return (
     <>
       <Provider store={store}>
-        <RoutesApp />
+        <PersistGate persistor={persistor}>
+          <RoutesApp />
+        </PersistGate>
       </Provider>
     </>
   );
-}
-
-export default App;
+};

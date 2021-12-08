@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import './style.scss';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../../store/Messages/actions';
+import { addMessageFromBot } from '../../store/Messages/actions';
 
 export const InputMessage = ({ chatId }) => {
   const [text, setText] = useState('');
@@ -19,7 +19,7 @@ export const InputMessage = ({ chatId }) => {
         isRead: true,
       };
 
-      dispatch(addMessage({ id: chatId, message }));
+      dispatch(addMessageFromBot({ id: chatId, message }));
       setText('');
     }
   };

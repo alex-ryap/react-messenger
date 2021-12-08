@@ -4,7 +4,7 @@ import { useCallback } from 'react/cjs/react.development';
 import { deleteChat } from '../../store/Chats/actions';
 import { selectUser } from '../../store/Chats/selectors';
 import { selectAllMessages } from '../../store/Messages/selectors';
-import { ChatOptions } from '../ChatOptions';
+import { Options } from '../Options';
 import { InputMessage } from '../InputMessage';
 import { Message } from '../Message';
 import { UserInfo } from '../UserInfo';
@@ -15,7 +15,7 @@ export const ChatComponent = ({ id }) => {
   const messages = useSelector(selectAllMessages(id));
   const dispatch = useDispatch();
 
-  const [showChatOptions, setShowChatOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
   const [posOptions, setPosOptions] = useState({ x: 0, y: 0 });
 
   const openOptions = useCallback((e) => {
@@ -23,22 +23,21 @@ export const ChatComponent = ({ id }) => {
       x: e.clientX,
       y: e.clientY,
     });
-    setShowChatOptions(true);
+    setShowOptions(true);
   }, []);
 
   const closeOptions = useCallback(() => {
-    setShowChatOptions(false);
+    setShowOptions(false);
   }, []);
 
   const handleDelete = () => {
-    console.log(id);
     dispatch(deleteChat(id));
   };
 
   return (
     <div className="chat">
-      {showChatOptions && (
-        <ChatOptions
+      {showOptions && (
+        <Options
           position={posOptions}
           close={closeOptions}
           onDelete={handleDelete}
@@ -52,6 +51,7 @@ export const ChatComponent = ({ id }) => {
           </button>
         </div>
         <ul className="chat__messages">
+          {messages.length === 0 && <p className="chat__empty">No messages</p>}
           {messages.map((message) => {
             return (
               <Message
