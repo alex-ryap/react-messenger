@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { HolidaysList } from '../../components/HolidayList';
 import { PageTitle } from '../../components/PageTittle';
+import { Sidebar } from '../../components/Sidebar';
 import { Spinner } from '../../components/Spinner';
 import { getHolidays } from '../../store/Calendar/actions';
 import {
@@ -24,30 +25,34 @@ export const Calendar = () => {
 
   useEffect(() => {
     requestHolidays();
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <div className="calendar">
-      <div className="calendar__wrapper">
-        <div className="calendar__header">
-          <PageTitle title="Calendar" subtitle="Your events" />
-        </div>
-        <div className="calendar__content">
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <>
-              <Button
-                title="Update"
-                icon="fa-redo-alt"
-                eventClick={requestHolidays}
-              />
-              {error && <p>Error: {error}</p>}
-              <HolidaysList holidays={holidays} />
-            </>
-          )}
+    <>
+      <Sidebar />
+      <div className="calendar">
+        <div className="calendar__wrapper">
+          <div className="calendar__header">
+            <PageTitle title="Calendar" subtitle="Your events" />
+          </div>
+          <div className="calendar__content">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <Button
+                  title="Update"
+                  icon="fa-redo-alt"
+                  eventClick={requestHolidays}
+                />
+                {error && <p>Error: {error}</p>}
+                <HolidaysList holidays={holidays} />
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

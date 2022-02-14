@@ -1,5 +1,5 @@
 import { UserInfo } from '../UserInfo';
-import { truncate } from '../../utils/common';
+import { formatDate, truncate } from '../../utils/common';
 import './style.scss';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -33,7 +33,9 @@ export const ChatItem = ({ id }) => {
         <div className="top">
           <UserInfo user={user} />
           {lastMessage && lastMessage.date && (
-            <span className="time">{lastMessage.date}</span>
+            <span className="time">
+              {formatDate(new Date(lastMessage.date))}
+            </span>
           )}
         </div>
         <div className="body">

@@ -14,6 +14,10 @@
     align-items: center;
   }
 
+  &__search {
+    margin: 20px 0;
+  }
+
   &__content {
     overflow-x: hidden;
     overflow-y: auto;

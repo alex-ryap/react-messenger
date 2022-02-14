@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback } from 'react/cjs/react.development';
 import { selectAllUsers } from '../../store/Users/selectors';
 import './style.scss';
-import { addChat } from '../../store/Chats/actions';
 import { selectAllChats } from '../../store/Chats/selectors';
 import { useNavigate } from 'react-router';
 
@@ -13,14 +12,12 @@ export const CreateChatDialog = ({ save, close }) => {
   const navigate = useNavigate();
   const userList = useSelector(selectAllUsers);
   const chatsList = useSelector(selectAllChats);
-  const dispatch = useDispatch();
 
   const handleChange = useCallback((e) => {
-    setselectedUserId(+e.target.value);
+    setselectedUserId(e.target.value);
   }, []);
 
   const handleSave = () => {
-    debugger;
     if (!selectedUserId) {
       setShowError(true);
       return;
@@ -30,12 +27,7 @@ export const CreateChatDialog = ({ save, close }) => {
     if (chat) {
       navigate(`/chats/${chat.id}`);
     } else {
-      const user = userList.find((user) => user.userId === selectedUserId);
-      const newChat = {
-        id: 5,
-        user: user,
-      };
-      dispatch(addChat(newChat));
+      save(selectedUserId);
     }
     close();
   };

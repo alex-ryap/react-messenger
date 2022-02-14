@@ -2,24 +2,26 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import './style.scss';
 import { useDispatch } from 'react-redux';
-import { addMessageFromBot } from '../../store/Messages/actions';
+import { addMessageWithFb } from '../../store/Messages/actions';
+import { push } from 'firebase/database';
+import { getMessagesRefById } from '../../services/firebase';
 
 export const InputMessage = ({ chatId }) => {
   const [text, setText] = useState('');
-  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (text) {
       const message = {
         id: uuid(),
+        chatId: chatId,
         author: 0,
         text: text,
-        date: 'now',
+        date: new Date().getTime(),
         isRead: true,
       };
-
-      dispatch(addMessageFromBot({ id: chatId, message }));
+      debugger;
+      push(getMessagesRefById(chatId), message);
       setText('');
     }
   };

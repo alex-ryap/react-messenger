@@ -1,41 +1,6 @@
-import human1 from '../../img/human1.png';
-import human2 from '../../img/human2.png';
-import human3 from '../../img/human3.png';
-import bot from '../../img/robot.png';
-import { ADD_USER, CHANGE_USER, DELETE_USER } from './actions';
+import { ADD_USER, CHANGE_USER, DELETE_USER, SET_USERS } from './actions';
 
-const initialState = [
-  {
-    userId: -1,
-    avatar: bot,
-    name: 'Bot',
-  },
-  {
-    userId: 1,
-    avatar: human1,
-    name: 'Lilly Robin',
-  },
-  {
-    userId: 2,
-    avatar: human2,
-    name: 'Bob Williams',
-  },
-  {
-    userId: 3,
-    avatar: human3,
-    name: 'Mary Grace',
-  },
-  {
-    userId: 4,
-    avatar: human1,
-    name: 'Ron Ashley',
-  },
-  {
-    userId: 5,
-    avatar: human2,
-    name: 'James Bran',
-  },
-];
+const initialState = [];
 
 export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +10,8 @@ export const usersReducer = (state = initialState, action) => {
       return [...state];
     case DELETE_USER:
       return [...state.filter((user) => user.userId !== action.payload)];
+    case SET_USERS:
+      return action.payload;
     default:
       return state;
   }

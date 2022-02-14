@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react/cjs/react.development';
 import { deleteChat } from '../../store/Chats/actions';
@@ -14,6 +14,7 @@ export const ChatComponent = ({ id }) => {
   const user = useSelector(selectUser(id));
   const messages = useSelector(selectAllMessages(id));
   const dispatch = useDispatch();
+  console.log(messages);
 
   const [showOptions, setShowOptions] = useState(false);
   const [posOptions, setPosOptions] = useState({ x: 0, y: 0 });
