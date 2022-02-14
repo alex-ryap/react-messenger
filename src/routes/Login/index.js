@@ -5,20 +5,18 @@ import './style.scss';
 
 export const Login = () => {
   const [error, setError] = useState('');
-  const [showError, setShowError] = useState(false);
 
   const handleLogIn = async (email, password) => {
     try {
       await logIn(email, password);
     } catch (err) {
-      console.log(err);
-      setError(err);
-      setShowError(true);
+      console.log('Error', err);
+      setError(err.message);
     }
   };
 
   const handlerShowError = () => {
-    setShowError(false);
+    setError('');
   };
 
   const content = {
@@ -35,7 +33,7 @@ export const Login = () => {
       content={content}
       onSubmit={handleLogIn}
       error={error}
-      showError={showError}
+      showError={handlerShowError}
     />
   );
 };
