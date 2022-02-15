@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './style.scss';
 
 export const Toast = ({ type, message, icon, showError }) => {

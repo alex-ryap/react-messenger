@@ -1,5 +1,5 @@
-import { onValue, push } from 'firebase/database';
-import { getMessagesRefById, messagesRef } from '../../services/firebase';
+import { onValue } from 'firebase/database';
+import { messagesRef } from '../../services/firebase';
 
 export const ADD_MESSAGE = 'MESSAGES::ADD_MESSAGE';
 export const SET_MESSAGES = 'MESSAGES::SET_MESSAGES';

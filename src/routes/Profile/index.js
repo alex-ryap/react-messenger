@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react/cjs/react.development';
 import { Sidebar } from '../../components/Sidebar';
+import { EditableField } from '../../components/EditableField';
 import { profileRef } from '../../services/firebase';
 import { changeName } from '../../store/Profile/actions';
 import { selectProfileUser } from '../../store/Profile/selectors';
@@ -40,17 +41,12 @@ export const Profile = () => {
       <div className="profile">
         <div className="profile__content">
           <h1>Profile</h1>
-          <div className="profile__settings settings">
-            <div className="settings__field">
-              <p className="settings__title">Name</p>
-              <input
-                className="settings__edit settings__name"
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={handleChangeName}
-              />
-            </div>
+          <div className="profile__settings">
+            <EditableField
+              title="Name"
+              value={name}
+              onChange={handleChangeName}
+            />
           </div>
         </div>
         <button className="profile__btn" onClick={handleSaveSettings}>

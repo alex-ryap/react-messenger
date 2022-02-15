@@ -1,10 +1,10 @@
-import profilePhoto from '../../img/User Photo.png';
+import profilePhoto from '../../img/profile.jpg';
 import { CHANGE_NAME, SING_IN, SING_OUT } from './actions';
 
 const initialState = {
   user: {
     avatar: profilePhoto,
-    name: 'Henry Jabbawockiez',
+    name: 'Star Lord',
   },
   authed: false,
 };

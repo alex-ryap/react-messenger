@@ -15,7 +15,7 @@ export const Contact = ({ contact }) => {
           src={contact.avatar}
           alt="user avatar"
         />
-        <p className="contact__name">{contact.name}</p>
+        <p className="contact__name">{contact.fullname}</p>
       </NavLink>
     </li>
   );

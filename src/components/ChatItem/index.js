@@ -7,13 +7,14 @@ import {
   selectAllMessages,
   selectLastMessage,
 } from '../../store/Messages/selectors';
-import { selectUser } from '../../store/Chats/selectors';
+import { selectChatCreateDate, selectUser } from '../../store/Chats/selectors';
 
 export const ChatItem = ({ id }) => {
   const user = useSelector(selectUser(id));
   const messages = useSelector(selectAllMessages(id));
+  const chatCreateDate = useSelector(selectChatCreateDate(id));
   const lastMessage = useSelector(selectLastMessage(id)) || {
-    date: 'now',
+    date: chatCreateDate || 'now',
     text: 'No messages',
   };
 
@@ -33,9 +34,7 @@ export const ChatItem = ({ id }) => {
         <div className="top">
           <UserInfo user={user} />
           {lastMessage && lastMessage.date && (
-            <span className="time">
-              {formatDate(new Date(lastMessage.date))}
-            </span>
+            <span className="time">{formatDate(lastMessage.date)}</span>
           )}
         </div>
         <div className="body">

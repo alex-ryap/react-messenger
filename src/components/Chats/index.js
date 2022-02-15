@@ -1,13 +1,8 @@
-import { onValue, set } from 'firebase/database';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react/cjs/react.development';
-import {
-  addChat,
-  addChatWithFb,
-  initChatsTracker,
-} from '../../store/Chats/actions';
+import { addChatWithFb, initChatsTracker } from '../../store/Chats/actions';
 import { selectAllChats } from '../../store/Chats/selectors';
 import { Button } from '../Button';
 import { ChatItem } from '../ChatItem';
@@ -40,11 +35,14 @@ export const ChatsComponent = () => {
   }, []);
 
   const createChat = (userId) => {
+    console.log(userId);
     const newChat = {
       id: uuid(),
       date: new Date().getTime(),
       userId: userId,
     };
+
+    console.log(newChat);
 
     dispatch(addChatWithFb(newChat));
     navigate(`/chats/${newChat.id}`);
@@ -52,13 +50,7 @@ export const ChatsComponent = () => {
 
   return (
     <div className="chats">
-      {showDialog && (
-        <CreateChatDialog
-          save={createChat}
-          close={closeDialog}
-          title="Create new chat"
-        ></CreateChatDialog>
-      )}
+      {showDialog && <CreateChatDialog save={createChat} close={closeDialog} />}
       <div className="chats__content">
         <div className="chats__top">
           <PageTitle title="Chats" subtitle="Recent Chats" />

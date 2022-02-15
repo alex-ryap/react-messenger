@@ -17,7 +17,7 @@ export const UserInfo = ({ user, direction = 'row', size = 50 }) => {
             : { paddingLeft: '20px' }
         }
       >
-        <p className="author__name">{user.name}</p>
+        <p className="author__name">{user.fullname}</p>
       </div>
     </div>
   );

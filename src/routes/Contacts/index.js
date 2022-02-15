@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Button } from '../../components/Button';
@@ -8,32 +8,31 @@ import { Input } from '../../components/Input';
 import { PageTitle } from '../../components/PageTittle';
 import { Sidebar } from '../../components/Sidebar';
 import { selectAllUsers, selectAllUsersId } from '../../store/Users/selectors';
-import human2 from '../../img/human2.png';
 import './style.scss';
 import { addUserWithFb, initUsersTracking } from '../../store/Users/actions';
-import { v4 as uuid } from 'uuid';
+import { CreateContactDialog } from '../../components/CreateContactDialog';
 
 export const Contacts = () => {
   const contacts = useSelector(selectAllUsers);
   const contactsId = useSelector(selectAllUsersId);
+
   const dispatch = useDispatch();
   const { userId } = useParams();
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     dispatch(initUsersTracking());
   }, []);
 
-  const handleAddContact = (e) => {
-    e.preventDefault();
+  const openDialog = useCallback(() => {
+    setShowDialog(true);
+  }, []);
 
-    const id = uuid();
-    const newContact = {
-      userId: id,
-      avatar: human2,
-      name: 'Bob',
-      date: new Date().getTime(),
-    };
+  const closeDialog = useCallback(() => {
+    setShowDialog(false);
+  }, []);
 
+  const createContact = (newContact) => {
     dispatch(addUserWithFb(newContact));
   };
 
@@ -41,13 +40,16 @@ export const Contacts = () => {
     <>
       <Sidebar />
       <div className="contacts">
+        {showDialog && (
+          <CreateContactDialog save={createContact} close={closeDialog} />
+        )}
         <div className="contacts__wrapper">
           <div className="contacts__header">
             <PageTitle title="Contacts" subtitle="Your contacts list" />
             <Button
               title="New contact"
               icon="fa-plus"
-              eventClick={handleAddContact}
+              eventClick={openDialog}
             />
           </div>
           <div className="contacts__search">

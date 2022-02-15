@@ -17,3 +17,8 @@ export const selectUser = (id) => (state) => {
 
   return user;
 };
+
+export const selectChatCreateDate = (id) => (state) => {
+  const chat = state.chats.find((chat) => chat.id === id);
+  return chat?.date;
+};

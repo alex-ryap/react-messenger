@@ -1,10 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  changeUser,
-  deleteUserWithFb,
-  updateUserWithFb,
-} from '../../store/Users/actions';
+import { deleteUserWithFb, updateUserWithFb } from '../../store/Users/actions';
 import { selectUser } from '../../store/Users/selectors';
 import { EditableField } from '../EditableField';
 import { UserInfo } from '../UserInfo';
@@ -12,8 +8,14 @@ import './style.scss';
 
 export const ContactEdit = ({ contactId }) => {
   const contact = useSelector(selectUser(contactId));
-  const [name, setName] = useState(contact?.name);
+  const [name, setName] = useState(contact.name);
+  const [surname, setSurname] = useState(contact.surname);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setName(contact.name);
+    setSurname(contact.surname);
+  }, [contact]);
 
   const handlerDelete = () => {
     dispatch(deleteUserWithFb(contactId));
@@ -23,6 +25,8 @@ export const ContactEdit = ({ contactId }) => {
     const changedUser = {
       ...contact,
       name: name,
+      surname: surname,
+      fullname: `${name} ${surname}`,
     };
 
     dispatch(updateUserWithFb(changedUser));
@@ -30,6 +34,10 @@ export const ContactEdit = ({ contactId }) => {
 
   const handlerChangeName = (e) => {
     setName(e.target.value);
+  };
+
+  const handlerChangeSurname = (e) => {
+    setSurname(e.target.value);
   };
 
   return (
@@ -43,6 +51,11 @@ export const ContactEdit = ({ contactId }) => {
             title="Name"
             value={name}
             onChange={handlerChangeName}
+          />
+          <EditableField
+            title="Surname"
+            value={surname}
+            onChange={handlerChangeSurname}
           />
         </div>
         <div className="contact-edit__actions">

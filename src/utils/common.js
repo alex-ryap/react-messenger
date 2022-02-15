@@ -4,18 +4,21 @@ export const truncate = (str) => {
 };
 
 export const formatDate = (date) => {
+  if (date === 'now') return date;
+
+  const messageDate = new Date(date);
   const currentDate = new Date();
-  const diffTime = Math.abs(currentDate.getTime() - date.getTime());
+  const diffTime = Math.abs(currentDate.getTime() - messageDate.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
 
   if (diffDays > 1) {
-    return `${('0' + date.getDate()).slice(-2)}.${(
+    return `${('0' + messageDate.getDate()).slice(-2)}.${(
       '0' +
-      (date.getMonth() + 1)
-    ).slice(-2)}.${date.getFullYear()}`;
+      (messageDate.getMonth() + 1)
+    ).slice(-2)}.${messageDate.getFullYear()}`;
   }
 
-  return `${('0' + date.getHours()).slice(-2)}:${(
-    '0' + date.getMinutes()
+  return `${('0' + messageDate.getHours()).slice(-2)}:${(
+    '0' + messageDate.getMinutes()
   ).slice(-2)}`;
 };
