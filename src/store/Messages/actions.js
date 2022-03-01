@@ -9,28 +9,6 @@ export const addMessage = (newMessage) => ({
   payload: newMessage,
 });
 
-// let timeout;
-
-// export const addMessageFromBot = (newMessage) => (dispatch) => {
-//   dispatch(addMessage(newMessage));
-
-//   if (newMessage.message.author !== 'Bot') {
-//     if (timeout) clearTimeout(timeout);
-
-//     timeout = setTimeout(() => {
-//       const botMessage = {
-//         id: uuid4(),
-//         author: -1,
-//         text: 'Hello, I am a bot',
-//         date: 'now',
-//         isRead: true,
-//       };
-
-//       dispatch(addMessage({ id: newMessage.id, message: botMessage }));
-//     }, 2000);
-//   }
-// };
-
 export const setMessages = (messages) => ({
   type: SET_MESSAGES,
   payload: messages,
