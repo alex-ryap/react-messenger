@@ -1,5 +1,6 @@
-export const TOGGLE_THEME = 'PROFILE::TOGGLE_THEME';
+export const CHANGE_SETTINGS = 'PROFILE::CHANGE_SETTINGS';
 
-export const toggleTheme = {
-  type: TOGGLE_THEME,
-};
+export const changeSettings = (newSettings) => ({
+  type: CHANGE_SETTINGS,
+  payload: newSettings,
+});

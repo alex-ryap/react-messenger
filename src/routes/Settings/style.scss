@@ -1,0 +1,16 @@
+.settings {
+  height: 100vh;
+  display: flex;
+
+  &__wrapper {
+    width: 500px;
+    padding: 30px 40px 0 40px;
+    height: 100vh;
+  }
+
+  &__content {
+    width: 100%;
+    height: calc(100vh - 146px);
+    margin-top: 30px;
+  }
+}

@@ -1,16 +1,42 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react/cjs/react.development';
+import { selectAllUsers } from '../../store/Users/selectors';
 import './style.scss';
+import { addChat } from '../../store/Chats/actions';
+import { selectAllChats } from '../../store/Chats/selectors';
+import { useNavigate } from 'react-router';
 
 export const CreateChatDialog = ({ save, close }) => {
-  const [chatName, setChatName] = useState('');
+  const [selectedUserId, setselectedUserId] = useState('');
+  const [showError, setShowError] = useState(false);
+  const navigate = useNavigate();
+  const userList = useSelector(selectAllUsers);
+  const chatsList = useSelector(selectAllChats);
+  const dispatch = useDispatch();
 
   const handleChange = useCallback((e) => {
-    setChatName(e.target.value);
+    setselectedUserId(+e.target.value);
   }, []);
 
   const handleSave = () => {
-    save(chatName);
+    debugger;
+    if (!selectedUserId) {
+      setShowError(true);
+      return;
+    }
+    setShowError(false);
+    const chat = chatsList.find((chat) => chat.user.userId === selectedUserId);
+    if (chat) {
+      navigate(`/chats/${chat.id}`);
+    } else {
+      const user = userList.find((user) => user.userId === selectedUserId);
+      const newChat = {
+        id: 5,
+        user: user,
+      };
+      dispatch(addChat(newChat));
+    }
     close();
   };
 
@@ -21,14 +47,25 @@ export const CreateChatDialog = ({ save, close }) => {
           <h2 className="dialog__title">Create chat</h2>
         </div>
         <div className="dialog__content">
-          <label htmlFor="name">Chat name:</label>
-          <input
-            id="name"
-            className="dialog__input"
-            type="text"
-            value={chatName}
-            onChange={handleChange}
-          />
+          <p>Select user:</p>
+          <select className="dialog__input" onChange={handleChange}>
+            <option></option>
+            {userList.map((user) => (
+              <option
+                key={user.userId}
+                data-id={user.userId}
+                value={user.userId}
+              >
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <p
+            className="dialog__error"
+            style={showError ? { opacity: 1 } : { opacity: 0 }}
+          >
+            Please, select user
+          </p>
         </div>
         <div className="dialog__actions">
           <button className="dialog__btn btn-success" onClick={handleSave}>

@@ -1,13 +1,21 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react/cjs/react.development';
-import { ChatOptions } from '../ChatOptions';
+import { deleteChat } from '../../store/Chats/actions';
+import { selectUser } from '../../store/Chats/selectors';
+import { selectAllMessages } from '../../store/Messages/selectors';
+import { Options } from '../Options';
 import { InputMessage } from '../InputMessage';
 import { Message } from '../Message';
 import { UserInfo } from '../UserInfo';
 import './style.scss';
 
-export const ChatComponent = ({ chat, id, sendMessage, deleteChat }) => {
-  const [showChatOptions, setShowChatOptions] = useState(false);
+export const ChatComponent = ({ id }) => {
+  const user = useSelector(selectUser(id));
+  const messages = useSelector(selectAllMessages(id));
+  const dispatch = useDispatch();
+
+  const [showOptions, setShowOptions] = useState(false);
   const [posOptions, setPosOptions] = useState({ x: 0, y: 0 });
 
   const openOptions = useCallback((e) => {
@@ -15,21 +23,21 @@ export const ChatComponent = ({ chat, id, sendMessage, deleteChat }) => {
       x: e.clientX,
       y: e.clientY,
     });
-    setShowChatOptions(true);
+    setShowOptions(true);
   }, []);
 
   const closeOptions = useCallback(() => {
-    setShowChatOptions(false);
+    setShowOptions(false);
   }, []);
 
   const handleDelete = () => {
-    deleteChat(id);
+    dispatch(deleteChat(id));
   };
 
   return (
     <div className="chat">
-      {showChatOptions && (
-        <ChatOptions
+      {showOptions && (
+        <Options
           position={posOptions}
           close={closeOptions}
           onDelete={handleDelete}
@@ -37,13 +45,14 @@ export const ChatComponent = ({ chat, id, sendMessage, deleteChat }) => {
       )}
       <div className="chat__content">
         <div className="chat__header">
-          <UserInfo user={chat.user} />
+          <UserInfo user={user} />
           <button className="chat__options" onClick={openOptions}>
             <i className="fas fa-ellipsis-v"></i>
           </button>
         </div>
         <ul className="chat__messages">
-          {chat.messages.map((message) => {
+          {messages.length === 0 && <p className="chat__empty">No messages</p>}
+          {messages.map((message) => {
             return (
               <Message
                 message={message}
@@ -54,7 +63,7 @@ export const ChatComponent = ({ chat, id, sendMessage, deleteChat }) => {
           })}
         </ul>
         <div className="chat__input">
-          <InputMessage chatId={id} sendMessage={sendMessage} />
+          <InputMessage chatId={id} />
         </div>
       </div>
     </div>

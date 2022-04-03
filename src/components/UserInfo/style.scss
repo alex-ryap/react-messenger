@@ -3,7 +3,6 @@
   align-items: center;
 
   &__photo {
-    width: 50px;
     border-radius: 50%;
     border: 2px solid white;
   }
@@ -11,7 +10,5 @@
   &__name {
     color: #000;
     font-weight: 700;
-    font-size: 16px;
-    padding-left: 20px;
   }
 }

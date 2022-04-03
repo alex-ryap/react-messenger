@@ -14,7 +14,6 @@
 
     & > .message__content {
       margin-left: 0;
-      margin-right: 20px;
 
       & > .message__text {
         background: #fff;
@@ -29,10 +28,6 @@
 
   &__avatar {
     width: 45px;
-  }
-
-  &__content {
-    margin-left: 20px;
   }
 
   &__text {
