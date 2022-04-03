@@ -8,3 +8,10 @@ export const DATEOPTIONS = {
   minute: 'numeric',
   second: 'numeric',
 };
+
+export const REQUEST_STATUS = {
+  CREATED: 0,
+  LOADING: 1,
+  SUCCESS: 2,
+  FAILURE: 3,
+};

@@ -6,6 +6,7 @@ import { usersReducer } from './Users/reducer';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
+import { holidayReducer } from './Calendar/reducer';
 
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose;
@@ -22,6 +23,7 @@ const persistedReducer = persistReducer(
     chats: chatsReducer,
     messages: messagesReducer,
     users: usersReducer,
+    holidays: holidayReducer,
   })
 );
 

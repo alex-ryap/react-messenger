@@ -1,9 +1,10 @@
 .calendar {
+  width: 100%;
   height: 100vh;
   display: flex;
 
   &__wrapper {
-    width: 500px;
+    width: 100%;
     padding: 30px 40px 0 40px;
     height: 100vh;
   }

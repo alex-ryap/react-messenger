@@ -1,0 +1,8 @@
+.holidays_list {
+  margin-top: 20px;
+  list-style-type: none;
+}
+
+.holiday_item:not(:last-child) {
+  margin-bottom: 10px;
+}
