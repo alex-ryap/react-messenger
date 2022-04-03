@@ -14,6 +14,7 @@ export const ChatComponent = ({ id }) => {
   const user = useSelector(selectUser(id));
   const messages = useSelector(selectAllMessages(id));
   const dispatch = useDispatch();
+  console.log(messages);
 
   const [showOptions, setShowOptions] = useState(false);
   const [posOptions, setPosOptions] = useState({ x: 0, y: 0 });

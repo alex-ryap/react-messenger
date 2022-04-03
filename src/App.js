@@ -7,12 +7,10 @@ import './App.scss';
 
 export const App = () => {
   return (
-    <>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <RoutesApp />
-        </PersistGate>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RoutesApp />
+      </PersistGate>
+    </Provider>
   );
 };

@@ -11,9 +11,10 @@
   text-decoration: none;
   transition: 0.4s all;
 
-  &:hover,
-  &-active {
+  &:hover {
     transform: scale(1.05);
+  }
+  &-active {
     background: linear-gradient(96.78deg, #7cb8f7 0%, #2a8bf2 100%);
     color: #fff;
   }
@@ -32,6 +33,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 2px solid white;
   }
 
   &__name {

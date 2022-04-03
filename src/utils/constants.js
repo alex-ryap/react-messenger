@@ -1,3 +1,5 @@
+import avatar from '../img/default.jpg';
+
 export const AUTHORS = {
   me: 'Me',
   robot: 'Robot',
@@ -15,3 +17,5 @@ export const REQUEST_STATUS = {
   SUCCESS: 2,
   FAILURE: 3,
 };
+
+export const AVATAR = avatar;
